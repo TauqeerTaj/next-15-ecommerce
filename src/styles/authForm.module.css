@@ -1,0 +1,30 @@
+
+.signup .bgImage{
+    width: 100%!important;
+    height: 600px;
+    object-fit: cover;
+}
+@media only screen and (max-width: 900px) {
+    .signup form {
+        position:absolute;
+        top:0;
+        left:30%
+    }
+    
+}
+@media only screen and (max-width: 768px) {
+    
+    .form {
+        margin-top:30px;
+    }
+    .heading{
+        font-size:24px!important;
+        font-weight: bold;
+    }
+    
+}
+@media only screen and (max-width: 450px) {
+    .signup form {
+        left:20%
+    }
+}

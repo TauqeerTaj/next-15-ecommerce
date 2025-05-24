@@ -1,0 +1,12 @@
+/*Footer*/
+.emailInput input {
+  color: #fff;
+  outline: none;
+}
+.emailInput input::placeholder {
+  color: #ccc;
+}
+.bgImage {
+  width: 100%;
+  height: 100vh;
+}

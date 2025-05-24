@@ -1,0 +1,29 @@
+#menuAppbar ul {
+  background-image: url("../assests/setting-menu.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+}
+
+.notifiImages {
+  display: flex;
+}
+
+.notifiImages img {
+  margin: 0px 10px;
+  cursor: pointer;
+}
+.notifiImages div:first-child img {
+  margin-left: 20px !important;
+  margin-right: 5px;
+}
+.wishListNotifi {
+  background: #db4444;
+  color: #fff;
+  position: absolute;
+  top: -5px;
+  right: 0;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 50%;
+}

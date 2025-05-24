@@ -1,0 +1,13 @@
+.boldHeading span{
+    font-weight: bold!important;
+}
+.list  .collapse li{
+    cursor: pointer;
+}
+.list  .collapse li:hover {
+    color: #DB4444
+}
+/*form*/
+.formHeading{
+    color:#DB4444
+}

@@ -1,0 +1,23 @@
+.nav {
+  border-right: 1px solid #ccc;
+}
+.openNav{
+  background-color:#ccc;
+  color: #000;
+  margin-top:10px;
+  display: none;
+  
+}
+@media only screen and (max-width: 600px){
+  .nav {
+    border-right: none;
+    background-color:#DB4444;
+    color:#fff;
+    position:absolute;
+    width: 100%;
+    z-index: 999;
+  }
+  .openNav{
+    display: block;
+  }
+}

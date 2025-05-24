@@ -1,0 +1,23 @@
+.newArrival h6{
+color:#fff
+}
+.newArrival img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.playStationContent {
+    position:absolute;
+    bottom:0;
+    padding: 0px 0px 20px 20px;
+    width: 220px;
+}
+.playStationContent p{
+    color:#fff;
+    font-size:12px;
+    margin-bottom:10px
+}
+.playStationContent a{
+    color:#fff;
+    text-decoration: underline;
+}

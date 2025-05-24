@@ -1,0 +1,13 @@
+.categoryBanner {
+    background-image: url('../assests/category-banner.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 50px 30px;
+
+}
+@media only screen and (max-width: 600px){
+    .categoryBanner img{
+        width: 100%;
+        object-fit: contain;
+    }
+}
