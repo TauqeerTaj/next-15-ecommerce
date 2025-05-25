@@ -1,20 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
-
-// MUI
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-
-// Components
-import Styles from "@/styles/authForm.module.css";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const ToastContainer = dynamic(
   () => import("react-toastify").then((mod) => mod.ToastContainer),
@@ -28,6 +18,20 @@ const LoginForm = () => {
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({ email: "", password: "" });
   const router = useRouter();
+
+  // Clean extension-added attributes on mount
+  useEffect(() => {
+    const cleanExtensionAttributes = () => {
+      document.querySelectorAll("[fdprocessedid]").forEach((el) => {
+        el.removeAttribute("fdprocessedid");
+      });
+    };
+
+    cleanExtensionAttributes();
+    const observer = new MutationObserver(cleanExtensionAttributes);
+    observer.observe(document.body, { subtree: true, attributes: true });
+    return () => observer.disconnect();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -44,77 +48,57 @@ const LoginForm = () => {
       });
 
       setLoading(false);
-      // if (result?.error) toast.error(result.error);
+      if (result?.error) toast.error(result.error);
       if (result?.ok) router.push("/home");
     } catch (error) {
       setLoading(false);
       console.log(error);
-      // toast.error("Sorry");
+      toast.error("Sorry");
     }
   };
 
   return (
-    <Box textAlign="center">
+    <>
       {loading && <LoadingComponent />}
       <ToastContainer />
-      <FormControl
-        component="form"
-        onSubmit={submitHandler}
-        className={Styles.form}
-        sx={{
-          md: { translate: "0px 150px" },
-          lg: { translate: "0px 150px" },
-          xl: { translate: "0px 150px" },
-        }}
-      >
-        <Typography
-          className={Styles.heading}
-          variant="h4"
-          sx={{ textAlign: "left", mb: 2 }}
-        >
-          Log in to Exclusive
-        </Typography>
-        <Typography variant="body1" sx={{ mb: 2, textAlign: "left" }}>
-          Enter your details below
-        </Typography>
-        <Stack direction="column" spacing={2}>
-          <TextField
-            id="email"
-            label="Email or Phone Number"
-            variant="standard"
+      <form className="w-100 grid m-auto" onSubmit={submitHandler}>
+        <h1 className="text-[36px]">Log in to Exclusive</h1>
+        <p className="mt-[15px] mb-[30px]">Enter your details below</p>
+        <div className="mb-[30px]">
+          <input
+            type="text"
             name="email"
             value={user.email}
+            placeholder="Email or Phone Number"
+            className="border-b border-[#ccc] w-[100%] outline-none"
             onChange={handleChange}
+            data-extension-resist
           />
-          <TextField
-            id="password"
-            label="Password"
-            variant="standard"
+        </div>
+        <div className="mb-[30px]">
+          <input
+            type="password"
             name="password"
             value={user.password}
+            placeholder="Password"
+            className="border-b border-[#ccc] w-[100%] outline-none"
             onChange={handleChange}
+            data-extension-resist
           />
-          <Stack
-            direction="row"
-            spacing={5}
-            sx={{ mt: 6, alignItems: "center" }}
+        </div>
+        <div className="grid grid-cols-2 gap-4 items-center">
+          <button
+            type="submit"
+            className="bg-[#DB4444] text-white py-3 rounded cursor-pointer w-30"
           >
-            <Button
-              variant="contained"
-              color="error"
-              type="submit"
-              sx={{ textTransform: "capitalize", p: 2, width: 120 }}
-              disabled={!user.email || !user.password}
-            >
-              Log In
-            </Button>
-            <Link href="" style={{ color: "#DB4444", fontWeight: "bold" }}>
-              Forget Password?
-            </Link>
-          </Stack>
-        </Stack>
-      </FormControl>
-    </Box>
+            Log In
+          </button>
+          <Link href="" className="text-end text-[#DB4444] cursor-pointer">
+            Forget password?
+          </Link>
+        </div>
+      </form>
+    </>
   );
 };
 

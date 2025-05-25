@@ -3,34 +3,25 @@
 import React from "react";
 
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import Link from "next/link";
+
 //axios
 import axios from "axios";
 
+//Router
 import { useRouter } from "next/navigation";
 
 //Interface
 import { AuthInterface } from "@/constant/authInterface";
-
-//Material UI Imports
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import { FormControl } from "@mui/material";
 //Toast
 import { toast } from "react-toastify";
 //Images
 import GoogleImage from "@/assests/google.png";
 //Components
 import LoadingComponent from "@/components/LoadingBar";
-//Styles
-import Styles from "@/styles/authForm.module.css";
 
 const SignupForm = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const [loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({
     name: "",
@@ -67,110 +58,69 @@ const SignupForm = () => {
     }
   };
 
-  const loginAlert = () => {
-    toast.warning("You are already logged in");
-  };
   return (
     <>
-      <Box textAlign="center">
-        {loading && <LoadingComponent />}
-        <FormControl
-          component="form"
-          // action={authSubmitHandler}
-          className={Styles.form}
-          sx={{
-            md: { translate: "0px 90px" },
-            lg: { translate: "0px 90px" },
-            xl: { translate: "0px 90px" },
-          }}
-          onSubmit={submitHandler}
-        >
-          <Typography
-            className={Styles.heading}
-            variant="h4"
-            style={{ textAlign: "left", marginBottom: 10 }}
+      {loading && <LoadingComponent />}
+      <form className="w-100 grid m-auto" onSubmit={submitHandler}>
+        <h1 className="text-[36px]">Create an account</h1>
+        <p className="mt-[15px] mb-[30px]">Enter your details below</p>
+        <div className="mb-[30px]">
+          <input
+            type="text"
+            placeholder="Name"
+            name="name"
+            value={user.name}
+            className="border-b border-[#ccc] w-[100%] outline-none"
+            onChange={handleChange}
+            data-extension-resist
+          />
+        </div>
+        <div className="mb-[30px]">
+          <input
+            type="text"
+            name="email"
+            value={user.email}
+            placeholder="Email or Phone Number"
+            className="border-b border-[#ccc] w-[100%] outline-none"
+            onChange={handleChange}
+            data-extension-resist
+          />
+        </div>
+        <div className="mb-[30px]">
+          <input
+            type="password"
+            name="password"
+            value={user.password}
+            placeholder="Password"
+            className="border-b border-[#ccc] w-[100%] outline-none"
+            onChange={handleChange}
+            data-extension-resist
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4 items-center">
+          <button
+            type="submit"
+            className="bg-[#DB4444] text-white py-3 rounded cursor-pointer w-100 mb-4"
           >
-            Create an account
-          </Typography>
-          <Typography
-            variant="body1"
-            style={{ marginBottom: 20, textAlign: "left" }}
+            Create Account
+          </button>
+        </div>
+        <div>
+          <button className="w-100 border border-[#ccc] rounded flex place-content-center py-3 cursor-pointer mb-7">
+            <Image src={GoogleImage} alt="google-icon" className="mr-4" />
+            Sign up with Google
+          </button>
+        </div>
+        <div className="w-100 text-center">
+          Already have account?
+          <Link
+            href="/login"
+            className="text-end cursor-pointer ms-4 pb-1 border-b"
           >
-            Enter your details below
-          </Typography>
-          <Stack direction="column" spacing={2}>
-            <TextField
-              id="name"
-              label="Name"
-              variant="standard"
-              name="name"
-              value={user.name}
-              onChange={handleChange}
-            />
-            <TextField
-              id="email"
-              label="Email"
-              name="email"
-              variant="standard"
-              type="email"
-              value={user.email}
-              onChange={handleChange}
-            />
-            <TextField
-              id="password"
-              label="Password"
-              name="password"
-              variant="standard"
-              type="password"
-              value={user.password}
-              onChange={handleChange}
-            />
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ textTransform: "capitalize", p: 2 }}
-              style={{ marginTop: 40 }}
-              type="submit"
-              disabled={!user.name || !user.email || !user.password}
-            >
-              Create Account
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<Image src={GoogleImage} alt="google-icon" />}
-              sx={{
-                textTransform: "none",
-                p: 2,
-                border: "1px solid #ccc",
-                color: "#000",
-              }}
-            >
-              Sign up with Google
-            </Button>
-            <Typography variant="body1" textAlign="center">
-              Already have account?{" "}
-              <span
-                style={{
-                  borderBottom: "1px solid #000",
-                  paddingBottom: 3,
-                  marginLeft: 5,
-                  cursor: "pointer",
-                }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (session?.user) {
-                    loginAlert();
-                  } else {
-                    router.push("/login");
-                  }
-                }}
-              >
-                Log in
-              </span>
-            </Typography>
-          </Stack>
-        </FormControl>
-      </Box>
+            Log In
+          </Link>
+        </div>
+      </form>
     </>
   );
 };
