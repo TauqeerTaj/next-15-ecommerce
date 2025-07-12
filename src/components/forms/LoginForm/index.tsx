@@ -48,6 +48,7 @@ const LoginForm = () => {
       });
 
       setLoading(false);
+      console.log("login Error:", result);
       if (result?.error) toast.error(result.error);
       if (result?.ok) router.push("/home");
     } catch (error) {

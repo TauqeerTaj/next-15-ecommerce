@@ -4,6 +4,12 @@
  */
 
 import type { Config } from "jest";
+import nextJest from "next/jest.js";
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: "./",
+});
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -91,6 +97,9 @@ const config: Config = {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1", // If you're using path aliases
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -176,12 +185,18 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
   //   "\\\\node_modules\\\\",
   //   "\\.pnp\\.[^\\\\]+$"
   // ],
+  transformIgnorePatterns: [
+    "/node_modules/(?!next-auth)/", // Add other packages if needed
+  ],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
@@ -196,4 +211,4 @@ const config: Config = {
   // watchman: true,
 };
 
-export default config;
+export default createJestConfig(config);

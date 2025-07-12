@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-
-const MONGODB_URI = process.env.MONGODB_URI as string;
+import { MongoClient } from "mongodb";
 
 export const connectToDatabase = async () => {
-  if (mongoose.connections[0].readyState) return;
-  await mongoose.connect(MONGODB_URI);
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.qnkir.mongodb.net/e-commerce?retryWrites=true&w=majority`
+  );
+  return client;
 };
