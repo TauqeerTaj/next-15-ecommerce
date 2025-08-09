@@ -47,10 +47,11 @@ const LoginForm = () => {
         password: user.password,
       });
 
-      setLoading(false);
-      console.log("login Error:", result);
       if (result?.error) toast.error(result.error);
-      if (result?.ok) router.push("/home");
+      if (result?.ok) {
+        router.push("/home");
+        setLoading(false);
+      }
     } catch (error) {
       setLoading(false);
       console.log(error);

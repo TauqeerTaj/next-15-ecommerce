@@ -42,63 +42,6 @@ import { IoMdMenu } from "react-icons/io";
 //Styles
 import Styles from "@/styles/menu.module.css";
 
-const pages = [
-  {
-    page: "Home",
-    path: "/home",
-  },
-  {
-    page: "Contact",
-    path: "/contact",
-  },
-  {
-    page: "About",
-    path: "/about",
-  },
-  {
-    page: "Signup",
-    path: "/signup",
-  },
-];
-const handleLogout = async () => {
-  await signOut({
-    callbackUrl: "/login",
-    redirect: true,
-  });
-  localStorage.clear();
-  sessionStorage.clear();
-};
-
-const settings = [
-  {
-    icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
-    text: "Manage My Account",
-    path: "/profile",
-  },
-  {
-    icon: <Image src={OrderImg} width={25} height={25} alt="order-icon" />,
-    text: "My Order",
-    path: "/profile",
-  },
-  {
-    icon: <Image src={CancelImg} width={25} height={25} alt="cancel-icon" />,
-    text: "My Cancellations",
-    path: "/profile",
-  },
-  {
-    icon: <Image src={ReviewsImg} width={25} height={25} alt="reviews-icon" />,
-    text: "My Reviews",
-    path: "/profile",
-  },
-
-  {
-    icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
-    text: "Logout",
-    path: "/login",
-    action: handleLogout,
-  },
-];
-
 function AccountMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -110,7 +53,7 @@ function AccountMenu() {
   const wishListProducts = useAppSelector(
     (state) => state?.wishList?.wishListProducts
   );
-  console.log("session:", session);
+
   React.useEffect(() => {
     const fetchWishList = async () => {
       const data = await getWishList();
@@ -118,6 +61,67 @@ function AccountMenu() {
     };
     fetchWishList();
   }, [session]);
+
+  const pages = [
+    {
+      page: "Home",
+      path: "/home",
+    },
+    {
+      page: "Contact",
+      path: "/contact",
+    },
+    {
+      page: "About",
+      path: "/about",
+    },
+    {
+      page: "Signup",
+      path: "/signup",
+    },
+  ];
+  const handleLogout = async () => {
+    setLoading(true);
+    await signOut({
+      callbackUrl: "/login",
+      redirect: true,
+    });
+    setLoading(false);
+    localStorage.clear();
+    sessionStorage.clear();
+  };
+
+  const settings = [
+    {
+      icon: <Image src={UserImg} width={25} height={25} alt="user-icon" />,
+      text: "Manage My Account",
+      path: "/profile",
+    },
+    {
+      icon: <Image src={OrderImg} width={25} height={25} alt="order-icon" />,
+      text: "My Order",
+      path: "/profile",
+    },
+    {
+      icon: <Image src={CancelImg} width={25} height={25} alt="cancel-icon" />,
+      text: "My Cancellations",
+      path: "/profile",
+    },
+    {
+      icon: (
+        <Image src={ReviewsImg} width={25} height={25} alt="reviews-icon" />
+      ),
+      text: "My Reviews",
+      path: "/profile",
+    },
+
+    {
+      icon: <Image src={LogoutImg} width={25} height={25} alt="logout-icon" />,
+      text: "Logout",
+      path: "/login",
+      action: handleLogout,
+    },
+  ];
 
   const handleClick = () => {
     console.log("clicked the clear icon...");
@@ -157,6 +161,9 @@ function AccountMenu() {
   };
 
   const selectedMenu = (menu: string) => {
+    if (!session && menu !== "Signup") {
+      alert("Please Login first!");
+    }
     dispatch(selectMenu(menu));
   };
 
@@ -254,7 +261,11 @@ function AccountMenu() {
                     fontFamily: "Poppins, sans-serif",
                     textTransform: "capitalize",
                     borderBottom: "1px solid #ccc",
-                    borderColor: activeMenu === page.page ? "#ccc" : "#fff",
+                    borderColor:
+                      (session && activeMenu === page.page) ||
+                      (activeMenu === page.page && activeMenu === "Signup")
+                        ? "#ccc"
+                        : "#fff",
                     "&:hover": {
                       borderColor: "#ccc",
                     },

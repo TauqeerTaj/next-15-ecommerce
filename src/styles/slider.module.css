@@ -71,20 +71,20 @@
   cursor: pointer;
 }
 .viewButton {
-  background-color: #db4444;
-  color: #fff;
-  width: 200px;
-  text-transform: capitalize;
+  background-color: #db4444 !important;
+  color: #fff !important;
+  width: 200px !important;
+  text-transform: capitalize !important;
 }
 .viewButtonSmall {
-  background-color: #db4444;
-  color: #fff;
-  width: 120px;
-  margin-top: 40px;
-  text-transform: capitalize;
-  position: absolute;
-  top: -80px;
-  right: 45px;
+  background-color: #db4444 !important;
+  color: #fff !important;
+  width: 120px !important;
+  margin-top: 40px !important;
+  text-transform: capitalize !important;
+  position: absolute !important;
+  top: -80px !important;
+  right: 45px !important;
 }
 .sliderImg {
   width: 200px;

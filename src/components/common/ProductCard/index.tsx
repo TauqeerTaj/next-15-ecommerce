@@ -39,7 +39,6 @@ const ProductCard: React.FC<ProductCardProps> = (data, trash) => {
       const response = await axios.delete(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteWishList/${id}`
       );
-      console.log("delete response:", response);
       toast.success(response.data.message);
       setLoading(false);
       router.reload();

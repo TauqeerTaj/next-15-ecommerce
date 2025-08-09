@@ -37,13 +37,13 @@ const ListCategory = () => {
 
   return (
     <>
-      <Button
+      {/* <Button
         sx={{ textTransform: "capitalize" }}
         className={Styles.openNav}
         onClick={() => handleShowCategories()}
       >
         {showCategory ? "Close Categories" : "Open Categories"}
-      </Button>
+      </Button> */}
       {(showCategory || !isMobile) && (
         <List component="nav" sx={{ pt: 5 }} className={Styles.nav}>
           {listCategory.map((item) => (

@@ -28,13 +28,10 @@ const Home = async () => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/services.json`).then((res) =>
       res.json()
     ),
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/home/api`).then((res) =>
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/home`).then((res) =>
       res.json()
     ),
   ]);
-
-  console.log("getApiData:", services, productsList);
-
   return (
     <>
       <Box sx={{ mx: 3 }}>
@@ -59,7 +56,7 @@ const Home = async () => {
           <Grid size={12} textAlign="center">
             <Slider
               setting={sliderCard.setting}
-              sliderCard={productsList?.flashProducts}
+              sliderCard={productsList?.flashProducts ?? []}
             />
           </Grid>
         </Grid>
@@ -108,7 +105,7 @@ const Home = async () => {
         >
           <SliderComponent
             setting={ourProducts.setting}
-            sliderCard={productsList.products}
+            sliderCard={productsList.products ?? []}
           />
         </Grid>
         {/* New Arrival */}
